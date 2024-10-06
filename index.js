@@ -26,19 +26,27 @@ async function run() {
   try {
     await client.connect();
 
-    
-    app.get('/listing', async (req, res) => {
-      try {
-        console.log(res)
-        const listings = await db.collection('listing').find().toArray();
-        console.log('listings', listings);
-        res.status(200).json(listings);
-      } catch (error) {
-        console.log(error)
-        console.error('Error fetching listings:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-      }
-    });
+
+  app.get('/listing', async (req, res) => {
+  try {
+
+    const { category } = req.query;
+
+    console.log('Category:', category);
+
+    const query = category ? { category } : {};
+
+    const listings = await db.collection('listing').find(query).toArray();
+
+    console.log('listings', listings);
+
+    res.status(200).json(listings);
+  } catch (error) {
+    console.error('Error fetching listings:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
     
 
     app.post('/listing', async (req, res) => {
