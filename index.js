@@ -26,6 +26,7 @@ async function run() {
   try {
     await client.connect();
 
+    
     app.get('/listing', async (req, res) => {
       try {
         console.log(res)
@@ -39,6 +40,7 @@ async function run() {
       }
     });
     
+
     app.post('/listing', async (req, res) => {
       try {
         const newListing = req.body;
